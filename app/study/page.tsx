@@ -8,13 +8,13 @@ export default async function Page() {
   return (
     <main
       className="flex items-center justify-center"
-      style={{fontFamily: 'Meiryo Arial', flexDirection: 'column'}}
+      style={{ fontFamily: 'Meiryo Arial', flexDirection: 'column' }}
     >
-      <StyledSection legendName='todo supabase'>
+      <StyledSection legendName="todo supabase">
         <Suspense fallback={<TaskSkelton />}>
-          <TaskApp/>
+          <TaskApp />
         </Suspense>
       </StyledSection>
     </main>
-  )
+  );
 }

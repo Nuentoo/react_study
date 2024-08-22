@@ -1,7 +1,7 @@
-'use client'
+'use client';
 
 import { memo } from 'react';
-import styled from 'styled-components'
+import styled from 'styled-components';
 import { useTodosContext } from './contexts/TasksContext';
 import Task from './Task';
 
@@ -39,4 +39,4 @@ export default function TaskList() {
       ))}
     </UlFlex>
   );
-};
+}
