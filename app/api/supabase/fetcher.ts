@@ -17,6 +17,7 @@ const fetcherTodoTable = async (
     method: method,
     headers: { 'Content-Type': 'application/json' },
     body: body ? JSON.stringify(body) : undefined,
+    cache: 'no-cache',
   });
   if (!res.ok) {
     throw new Error(
