@@ -23,6 +23,7 @@
     "eslint": "^8.57.0",
     "eslint-config-next": "^14.2.5",
     "postcss": "^8",
+    "prettier": "^3.3.3",
     "styled-components": "^6.1.11",
     "supabase": "^1.178.2",
     "tailwind-variants": "^0.2.1",
