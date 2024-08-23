@@ -8,10 +8,10 @@ export default async function TaskApp() {
   try {
     const todos = await fetcherTodoTable('GET');
     return (
-      <>
-        <strong>Data fetch failed ...</strong>
-        <TaskSkelton />
-      </>
+      <TasksProvider initialTodos={todos}>
+        <AddTodo />
+        <TaskList />
+      </TasksProvider>
     );
   } catch (error) {
     console.error('Error fetching initial todos:', error);
