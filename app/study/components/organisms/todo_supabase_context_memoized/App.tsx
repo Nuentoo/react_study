@@ -1,21 +1,25 @@
 import AddTodo from './AddTodo';
 import TaskList from './TaskList';
 import { TasksProvider } from './contexts/TasksContext';
+import TaskSkelton from '@/app/study/ui/TaskSkelton';
 import fetcherTodoTable from '@/app/api/supabase/fetcher';
-import type { TodoSupabase } from './type/type';
 
 export default async function TaskApp() {
-  let todos: TodoSupabase[];
   try {
-    todos = await fetcherTodoTable('GET');
+    const todos = await fetcherTodoTable('GET');
+    return (
+      <TasksProvider initialTodos={todos}>
+        <AddTodo />
+        <TaskList />
+      </TasksProvider>
+    );
   } catch (error) {
-    todos = [];
     console.error('Error fetching initial todos:', error);
+    return (
+      <>
+        <strong>Data fetch failed ...</strong>
+        <TaskSkelton />
+      </>
+    );
   }
-  return (
-    <TasksProvider initialTodos={todos}>
-      <AddTodo />
-      <TaskList />
-    </TasksProvider>
-  );
 }
