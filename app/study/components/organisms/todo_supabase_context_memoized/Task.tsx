@@ -1,6 +1,6 @@
 import { memo, useState, useRef, useMemo, useCallback } from 'react';
 import { useSetTodosContext } from './contexts/TasksContext';
-import TodoSkelton from '../../../ui/TodoSkelton';
+import TodoSpinner from '../../../ui/TodoSpinner';
 import StyledInputText from '../../atoms/StyledInputText';
 import StyledCheckbox from '../../atoms/StyledCheckbox';
 import {
@@ -124,7 +124,7 @@ export default function Task({ created_at, done, id, title }: TodoSupabase) {
   return (
     <>
       {isLoading ? (
-        <TodoSkelton />
+        <TodoSpinner />
       ) : (
         <>
           <div className="row-span-full">

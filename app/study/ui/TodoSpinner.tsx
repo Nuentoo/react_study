@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function TodoSkelton(): React.ReactNode {
+export default function TodoSpinner(): React.ReactNode {
   return (
     <>
       <div className="h-[48px]"></div>
