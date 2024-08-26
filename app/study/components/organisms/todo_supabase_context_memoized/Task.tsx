@@ -1,6 +1,6 @@
 import { memo, useState, useRef, useMemo, useCallback } from 'react';
 import { useSetTodosContext } from './contexts/TasksContext';
-import TodoSkelton from '../../../ui/TodoSkelton';
+import TodoSpinner from '../../../ui/TodoSpinner';
 import StyledInputText from '../../atoms/StyledInputText';
 import StyledCheckbox from '../../atoms/StyledCheckbox';
 import {
@@ -18,7 +18,9 @@ const MemoizedStyledInputText = memo(StyledInputText);
 
 const formatDate = (dateStr: string) => {
   const date = new Date(dateStr);
-  const tokyoDate = new Date(date.toLocaleString('ja-JP', { timeZone: 'Asia/Tokyo' }));
+  const tokyoDate = new Date(
+    date.toLocaleString('ja-JP', { timeZone: 'Asia/Tokyo' }),
+  );
   const year = tokyoDate.getFullYear();
   const month = String(tokyoDate.getMonth() + 1).padStart(2, '0');
   const day = String(tokyoDate.getDate()).padStart(2, '0');
@@ -122,7 +124,7 @@ export default function Task({ created_at, done, id, title }: TodoSupabase) {
   return (
     <>
       {isLoading ? (
-        <TodoSkelton />
+        <TodoSpinner />
       ) : (
         <>
           <div className="row-span-full">
