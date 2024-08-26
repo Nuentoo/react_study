@@ -25,8 +25,6 @@ const formatDate = (dateStr: string) => {
   const hours = String(tokyoDate.getHours()).padStart(2, '0');
   const minutes = String(tokyoDate.getMinutes()).padStart(2, '0');
 
-  console.log(`${year}/${month}/${day} ${hours}:${minutes}`)
-
   return `${year}/${month}/${day} ${hours}:${minutes}`;
 };
 
