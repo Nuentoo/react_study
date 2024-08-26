@@ -18,7 +18,9 @@ const MemoizedStyledInputText = memo(StyledInputText);
 
 const formatDate = (dateStr: string) => {
   const date = new Date(dateStr);
-  const tokyoDate = new Date(date.toLocaleString('ja-JP', { timeZone: 'Asia/Tokyo' }));
+  const tokyoDate = new Date(
+    date.toLocaleString('ja-JP', { timeZone: 'Asia/Tokyo' }),
+  );
   const year = tokyoDate.getFullYear();
   const month = String(tokyoDate.getMonth() + 1).padStart(2, '0');
   const day = String(tokyoDate.getDate()).padStart(2, '0');
