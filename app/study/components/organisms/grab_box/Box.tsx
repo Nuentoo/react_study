@@ -46,6 +46,7 @@ const Box: React.FC<BoxProps> = ({
         position: 'absolute',
         textAlign: 'center',
         transform: `translate(${position.x}px, ${position.y}px)`,
+        userSelect: 'none',
         width: boxSize,
       }}
       className="shadow-xl rounded-lg"
