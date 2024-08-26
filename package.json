@@ -3,8 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "TZ=Asia/Tokyo next build",
+    "dev": "TZ='Etc/UTC' next dev",
+    "build": "next build",
     "start": "next start",
     "lint": "next lint"
   },
