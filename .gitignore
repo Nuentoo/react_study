@@ -36,5 +36,6 @@ yarn-error.log*
 next-env.d.ts
 
 # local-only
+/supabase/
 /_doc/
 /_old/

@@ -2,9 +2,9 @@ import React, { forwardRef } from 'react';
 
 type InputProps = React.InputHTMLAttributes<HTMLInputElement>;
 
-const StyledInputText = forwardRef<HTMLInputElement, InputProps>(
-  (props, ref) => {
-    // console.log('StyledInputText を再レンダリング？？？')
+export default forwardRef<HTMLInputElement, InputProps>(
+  function StyledInputText(props, ref) {
+    // console.log('StyledInputText を再レンダリング？？？');
     return (
       <input
         ref={ref}
@@ -15,7 +15,3 @@ const StyledInputText = forwardRef<HTMLInputElement, InputProps>(
     );
   },
 );
-
-StyledInputText.displayName = 'StyledInputText';
-
-export default StyledInputText;

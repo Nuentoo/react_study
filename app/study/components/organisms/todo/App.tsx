@@ -1,17 +1,14 @@
-import AddTodo from './AddTodo';
-import TaskList from './TaskList';
-import { TasksProvider } from './contexts/TasksContext';
+import ClientTodoApp from './ClientTodoApp';
 import TaskSkelton from '@/app/study/ui/TaskSkelton';
 import fetcherTodoTable from '@/app/api/supabase/fetcher';
 
-export default async function TaskApp() {
+export default async function SeverTodoApp() {
   try {
-    const todos = await fetcherTodoTable('GET');
+    const tasks = await fetcherTodoTable('GET');
     return (
-      <TasksProvider initialTodos={todos}>
-        <AddTodo />
-        <TaskList />
-      </TasksProvider>
+      <>
+        <ClientTodoApp initialTasks={tasks} />
+      </>
     );
   } catch (error) {
     console.error('Error fetching initial todos:', error);

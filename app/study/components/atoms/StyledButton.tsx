@@ -21,8 +21,8 @@ const buttonVariants = tv({
   },
 });
 
-const StyledBlueButton: React.FC<ButtonProps> = ({ children, ...props }) => {
-  // console.log('StyledBlueButton 再レンダリング？？？')
+function StyledBlueButton({ children, ...props }: ButtonProps) {
+  // console.log('StyledBlueButton 再レンダリング？？？');
   return (
     <button
       className={buttonVariants({ color: 'blue' })}
@@ -32,12 +32,10 @@ const StyledBlueButton: React.FC<ButtonProps> = ({ children, ...props }) => {
       {children}
     </button>
   );
-};
+}
 
-StyledBlueButton.displayName = 'StyledBlueButton';
-
-const StyledRedButton: React.FC<ButtonProps> = ({ children, ...props }) => {
-  // console.log('StyledRedButton 再レンダリング？？？')
+function StyledRedButton({ children, ...props }: ButtonProps) {
+  // console.log('StyledRedButton 再レンダリング？？？');
   return (
     <button
       className={buttonVariants({ color: 'red' })}
@@ -47,9 +45,9 @@ const StyledRedButton: React.FC<ButtonProps> = ({ children, ...props }) => {
       {children}
     </button>
   );
-};
+}
 
-const StyledGreenButton: React.FC<ButtonProps> = ({ children, ...props }) => {
+function StyledGreenButton({ children, ...props }: ButtonProps) {
   // console.log('StyledGreenButton 再レンダリング？？？')
   return (
     <button
@@ -60,9 +58,9 @@ const StyledGreenButton: React.FC<ButtonProps> = ({ children, ...props }) => {
       {children}
     </button>
   );
-};
+}
 
-const StyledOrangeButton: React.FC<ButtonProps> = ({ children, ...props }) => {
+function StyledOrangeButton({ children, ...props }: ButtonProps) {
   // console.log('StyledOrangeButton 再レンダリング？？？')
   return (
     <button
@@ -73,7 +71,7 @@ const StyledOrangeButton: React.FC<ButtonProps> = ({ children, ...props }) => {
       {children}
     </button>
   );
-};
+}
 
 export {
   StyledBlueButton,
