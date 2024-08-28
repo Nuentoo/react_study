@@ -4,7 +4,7 @@ import fetcherTodoTable from '@/app/api/supabase/fetcher';
 
 export default async function SeverTodoApp() {
   try {
-    const tasks = await fetcherTodoTable('GET');
+    const tasks = await fetcherTodoTable('GET', null);
     return (
       <>
         <ClientTodoApp initialTasks={tasks} />

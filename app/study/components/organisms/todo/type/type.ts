@@ -1,9 +1,12 @@
 import type { Tables } from '@/app/api/supabase/schema.types';
-import type { Dispatch } from 'react';
+import type { BodyByMethodType } from '@/app/api/supabase/types/types';
 
 export type TodoSupabase = Tables<'todo Table'>;
 
 export type TodoListSupabase = TodoSupabase[];
+
+export type UpdateTodoTableType<T extends 'PATCH' | 'DELETE'> =
+  BodyByMethodType<T>;
 
 export type ClientTodoAppProps = {
   initialTasks: TodoSupabase[];

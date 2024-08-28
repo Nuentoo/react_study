@@ -1,18 +1,13 @@
 import type {
-  Tables,
-  TablesInsert,
-  TablesUpdate,
-} from '@/app/api/supabase/schema.types';
+  methodType,
+  BodyByMethodType,
+  fetcherTodoTableReturnType,
+} from '@/app/api/supabase/types/types';
 
-type methodType = 'GET' | 'POST' | 'PATCH' | 'DELETE';
-
-const fetcherTodoTable = async (
-  method: methodType,
-  body?:
-    | TablesInsert<'todo Table'>
-    | TablesUpdate<'todo Table'>
-    | Tables<'todo Table'>['created_at'],
-): Promise<Promise<Tables<'todo Table'>[]>> | never => {
+const fetcherTodoTable = async <T extends methodType>(
+  method: T,
+  body: BodyByMethodType<T>,
+): fetcherTodoTableReturnType => {
   const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/supabase`, {
     method: method,
     headers: { 'Content-Type': 'application/json' },
