@@ -2,9 +2,9 @@ import { forwardRef } from 'react';
 
 type InputProps = React.InputHTMLAttributes<HTMLInputElement>;
 
-const StyledCheckbox = forwardRef<HTMLInputElement, InputProps>(
-  (props, ref?) => {
-    // console.log('StyledCheckbox 再レンダリング？？？')
+export default forwardRef<HTMLInputElement, InputProps>(
+  function StyledCheckbox(props, ref?) {
+    // console.log('StyledCheckbox 再レンダリング？？？');
     return (
       <input
         type="checkbox"
@@ -15,7 +15,3 @@ const StyledCheckbox = forwardRef<HTMLInputElement, InputProps>(
     );
   },
 );
-
-StyledCheckbox.displayName = 'StyledCheckbox';
-
-export default StyledCheckbox;

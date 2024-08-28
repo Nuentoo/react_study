@@ -1,5 +1,4 @@
-import { memo, useState, useRef, useMemo, useCallback } from 'react';
-import { useSetTodosContext } from './contexts/TasksContext';
+import { memo, useState, useRef, useCallback } from 'react';
 import TodoSpinner from '../../../ui/TodoSpinner';
 import StyledInputText from '../../atoms/StyledInputText';
 import StyledCheckbox from '../../atoms/StyledCheckbox';
@@ -9,7 +8,7 @@ import {
   StyledOrangeButton,
 } from '../../atoms/StyledButton';
 import fetcherTodoTable from '@/app/api/supabase/fetcher';
-import type { TodoSupabase } from './type/type';
+import type { TodoProps, TodoSupabase } from './type/type';
 
 const MemoizedStyledCheckbox = memo(StyledCheckbox);
 const MemoizedStyledRedButton = memo(StyledRedButton);
@@ -18,26 +17,17 @@ const MemoizedStyledInputText = memo(StyledInputText);
 
 const formatDate = (dateStr: string) => {
   const date = new Date(dateStr);
-  const tokyoDate = new Date(
-    date.toLocaleString('ja-JP', { timeZone: 'Asia/Tokyo' }),
-  );
-  const year = tokyoDate.getFullYear();
-  const month = String(tokyoDate.getMonth() + 1).padStart(2, '0');
-  const day = String(tokyoDate.getDate()).padStart(2, '0');
-  const hours = String(tokyoDate.getHours()).padStart(2, '0');
-  const minutes = String(tokyoDate.getMinutes()).padStart(2, '0');
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
+  const hours = String(date.getHours()).padStart(2, '0');
+  const minutes = String(date.getMinutes()).padStart(2, '0');
 
   return `${year}/${month}/${day} ${hours}:${minutes}`;
 };
 
-export default function Task({ created_at, done, id, title }: TodoSupabase) {
-  // console.log(`${title}  再レンダリング???`)
-  const todo = useMemo(
-    () => ({ created_at, done, id, title }),
-    [created_at, done, id, title],
-  ); // ん〜…
-  const setTodos = useSetTodosContext();
-
+export default function Todo({ todo, onUpdateTodo, onDeleteTodo }: TodoProps) {
+  // console.log(`${todo.title} Todo 再レンダリング？？？`);
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isDisabled, setIsDisabled] = useState<boolean>(false);
@@ -45,21 +35,28 @@ export default function Task({ created_at, done, id, title }: TodoSupabase) {
   const editInputRef = useRef<HTMLInputElement | null>(null);
   const checkboxRef = useRef<HTMLInputElement | null>(null);
 
-  const handleChangeTitle = useCallback(() => {
+  const handleFillTitle = useCallback(() => {
     if (!editInputRef.current) return;
     setIsDisabled(!editInputRef.current.value.trim());
+  }, []);
+
+  const handleEditing = useCallback(() => {
+    setIsEditing(true);
   }, []);
 
   const updateTodoTables = useCallback(
     async (
       type: 'PATCH' | 'DELETE',
-      nextTodo: TodoSupabase | TodoSupabase['created_at'],
+      updateData: TodoSupabase | TodoSupabase['created_at'],
     ) => {
       try {
         setIsLoading(true);
-        await fetcherTodoTable(type, nextTodo);
-        const updatedTodos = await fetcherTodoTable('GET');
-        setTodos(updatedTodos);
+        const [operatedTodo] = await fetcherTodoTable(type, updateData);
+        if (type === 'PATCH') {
+          onUpdateTodo(operatedTodo);
+        } else if (type === 'DELETE') {
+          onDeleteTodo(operatedTodo);
+        }
       } catch (error) {
         // do nothing
         console.error(`Error fetching ${type} todos:`, error);
@@ -67,43 +64,40 @@ export default function Task({ created_at, done, id, title }: TodoSupabase) {
         setIsLoading(false);
       }
     },
-    [setTodos],
+    [onUpdateTodo, onDeleteTodo],
   );
 
   const handleSaveTodo = useCallback(() => {
     if (!editInputRef.current) return;
-    // console.log('Saveボタン押下')
     setIsEditing(false);
-    const nextTodo: TodoSupabase = {
+    const currentTitle = editInputRef.current.value;
+    if (todo.title === currentTitle) return;
+    const updateTodo: TodoSupabase = {
       ...todo,
-      title: editInputRef.current.value,
+      title: currentTitle,
     };
-    updateTodoTables('PATCH', nextTodo);
+    updateTodoTables('PATCH', updateTodo);
   }, [todo, updateTodoTables]);
 
   const handleCheckTodo = useCallback(() => {
     if (!checkboxRef.current) return;
-    const nextTodo: TodoSupabase = {
+    const updateTodo: TodoSupabase = {
       ...todo,
       done: checkboxRef.current.checked,
     };
-    updateTodoTables('PATCH', nextTodo);
+    updateTodoTables('PATCH', updateTodo);
   }, [todo, updateTodoTables]);
 
-  const handleEditting = useCallback(() => {
-    setIsEditing(true);
-  }, []);
-
-  const handleDeleteTodo = useCallback(async () => {
-    updateTodoTables('DELETE', created_at);
-  }, [created_at, updateTodoTables]);
+  const handleDeleteTodo = useCallback(() => {
+    updateTodoTables('DELETE', todo.created_at);
+  }, [todo, updateTodoTables]);
 
   const todoContent = isEditing ? (
     <>
       <MemoizedStyledInputText
-        defaultValue={title}
+        defaultValue={todo.title}
         ref={editInputRef}
-        onChange={handleChangeTitle}
+        onChange={handleFillTitle}
       />
       <div className="row-span-full col-start-3">
         <StyledOrangeButton onClick={handleSaveTodo} disabled={isDisabled}>
@@ -113,14 +107,15 @@ export default function Task({ created_at, done, id, title }: TodoSupabase) {
     </>
   ) : (
     <>
-      <pre>{title}</pre>
+      <pre>{todo.title}</pre>
       <div className="row-span-full col-start-3">
-        <MemoizedStyledGreenButton onClick={handleEditting}>
+        <MemoizedStyledGreenButton onClick={handleEditing}>
           Edit
         </MemoizedStyledGreenButton>
       </div>
     </>
   );
+
   return (
     <>
       {isLoading ? (
@@ -129,7 +124,7 @@ export default function Task({ created_at, done, id, title }: TodoSupabase) {
         <>
           <div className="row-span-full">
             <MemoizedStyledCheckbox
-              checked={done}
+              checked={todo.done}
               ref={checkboxRef}
               onChange={handleCheckTodo}
             />
@@ -141,7 +136,7 @@ export default function Task({ created_at, done, id, title }: TodoSupabase) {
             </MemoizedStyledRedButton>
           </div>
           <p className="col-start-2 row-start-2">
-            <small>post: {formatDate(created_at)}</small>
+            <small>post: {formatDate(todo.created_at)}</small>
           </p>
         </>
       )}
