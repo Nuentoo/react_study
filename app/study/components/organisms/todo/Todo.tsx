@@ -8,7 +8,7 @@ import {
   StyledOrangeButton,
 } from '../../atoms/StyledButton';
 import fetcherTodoTable from '@/app/api/supabase/fetcher';
-import type { TodoProps, TodoSupabase } from './type/type';
+import type { TodoProps, TodoSupabase, UpdateTodoTableType } from './type/type';
 
 const MemoizedStyledCheckbox = memo(StyledCheckbox);
 const MemoizedStyledRedButton = memo(StyledRedButton);
@@ -45,9 +45,9 @@ export default function Todo({ todo, onUpdateTodo, onDeleteTodo }: TodoProps) {
   }, []);
 
   const updateTodoTables = useCallback(
-    async (
-      type: 'PATCH' | 'DELETE',
-      updateData: TodoSupabase | TodoSupabase['created_at'],
+    async <T extends 'PATCH' | 'DELETE'>(
+      type: T,
+      updateData: UpdateTodoTableType<T>,
     ) => {
       try {
         setIsLoading(true);

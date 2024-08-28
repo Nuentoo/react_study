@@ -6,7 +6,7 @@ import type {
 
 export const GET = async () => {
   const { data, error, status } = await supabase
-    .from(process.env.NEXT_PUBLIC_SUPABASE_TODOS_TABLE_NAME!)
+    .from(process.env.NEXT_PUBLIC_SUPABASE_TODOS_TABLE_NAME)
     .select('*')
     .order('created_at', { ascending: true }); // 取得データを created_at 順にソートする
   if (error) {
@@ -21,7 +21,7 @@ export const GET = async () => {
 export const POST = async (req: Request) => {
   const todo: TablesInsert<'todo Table'> = await req.json();
   const { data, error, status } = await supabase
-    .from(process.env.NEXT_PUBLIC_SUPABASE_TODOS_TABLE_NAME!)
+    .from(process.env.NEXT_PUBLIC_SUPABASE_TODOS_TABLE_NAME)
     .insert(todo)
     .select();
   if (error) {
@@ -34,11 +34,11 @@ export const POST = async (req: Request) => {
 };
 
 export const PATCH = async (req: Request) => {
-  const todo: TablesUpdate<'todo Table'> = await req.json();
+  const todo: Required<TablesUpdate<'todo Table'>> = await req.json();
   const { data, error, status } = await supabase
-    .from(process.env.NEXT_PUBLIC_SUPABASE_TODOS_TABLE_NAME!)
+    .from(process.env.NEXT_PUBLIC_SUPABASE_TODOS_TABLE_NAME)
     .update(todo)
-    .eq('created_at', todo.created_at!)
+    .eq('created_at', todo.created_at)
     .select();
   if (error) {
     return new Response(
@@ -50,9 +50,10 @@ export const PATCH = async (req: Request) => {
 };
 
 export const DELETE = async (req: Request) => {
-  const created_atValue: string = await req.json();
+  const created_atValue: NonNullable<TablesUpdate<'todo Table'>['created_at']> =
+    await req.json();
   const { data, error, status } = await supabase
-    .from(process.env.NEXT_PUBLIC_SUPABASE_TODOS_TABLE_NAME!)
+    .from(process.env.NEXT_PUBLIC_SUPABASE_TODOS_TABLE_NAME)
     .delete()
     .eq('created_at', created_atValue)
     .select();
