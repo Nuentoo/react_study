@@ -2,17 +2,12 @@ import { memo, useState, useRef, useCallback } from 'react';
 import TodoSpinner from '../../../ui/TodoSpinner';
 import StyledInputText from '../../atoms/StyledInputText';
 import StyledCheckbox from '../../atoms/StyledCheckbox';
-import {
-  StyledRedButton,
-  StyledGreenButton,
-  StyledOrangeButton,
-} from '../../atoms/StyledButton';
+import { VariantsButton, buttonStyles } from '../../atoms/StyledButton';
 import fetcherTodoTable from '@/app/api/supabase/fetcher';
 import type { TodoProps, TodoSupabase, UpdateTodoTableType } from './type/type';
 
 const MemoizedStyledCheckbox = memo(StyledCheckbox);
-const MemoizedStyledRedButton = memo(StyledRedButton);
-const MemoizedStyledGreenButton = memo(StyledGreenButton);
+const MemoizedVariantsButton = memo(VariantsButton);
 const MemoizedStyledInputText = memo(StyledInputText);
 
 const formatDate = (dateStr: string) => {
@@ -99,19 +94,26 @@ export default function Todo({ todo, onUpdateTodo, onDeleteTodo }: TodoProps) {
         ref={editInputRef}
         onChange={handleFillTitle}
       />
-      <div className="row-span-full col-start-3">
-        <StyledOrangeButton onClick={handleSaveTodo} disabled={isDisabled}>
+      <div className="col-start-3 row-span-full">
+        <MemoizedVariantsButton
+          onClick={handleSaveTodo}
+          disabled={isDisabled}
+          className={buttonStyles({ color: 'orange' })}
+        >
           Save
-        </StyledOrangeButton>
+        </MemoizedVariantsButton>
       </div>
     </>
   ) : (
     <>
       <pre>{todo.title}</pre>
-      <div className="row-span-full col-start-3">
-        <MemoizedStyledGreenButton onClick={handleEditing}>
+      <div className="col-start-3 row-span-full">
+        <MemoizedVariantsButton
+          onClick={handleEditing}
+          className={buttonStyles({ color: 'green' })}
+        >
           Edit
-        </MemoizedStyledGreenButton>
+        </MemoizedVariantsButton>
       </div>
     </>
   );
@@ -130,10 +132,13 @@ export default function Todo({ todo, onUpdateTodo, onDeleteTodo }: TodoProps) {
             />
           </div>
           {todoContent}
-          <div className="row-span-full col-start-4">
-            <MemoizedStyledRedButton onClick={handleDeleteTodo}>
+          <div className="col-start-4 row-span-full">
+            <MemoizedVariantsButton
+              onClick={handleDeleteTodo}
+              className={buttonStyles({ color: 'red' })}
+            >
               Delete
-            </MemoizedStyledRedButton>
+            </MemoizedVariantsButton>
           </div>
           <p className="col-start-2 row-start-2">
             <small>post: {formatDate(todo.created_at)}</small>

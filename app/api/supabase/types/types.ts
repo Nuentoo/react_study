@@ -18,5 +18,5 @@ export type BodyByMethodType<T extends methodType> = T extends 'GET'
         : never;
 
 export type fetcherTodoTableReturnType =
-  | Promise<Promise<Tables<'todo Table'>[]>>
+  | Promise<Tables<'todo Table'>[]>
   | never;
