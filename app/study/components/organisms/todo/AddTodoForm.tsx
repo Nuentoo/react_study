@@ -1,7 +1,7 @@
 import { tv } from 'tailwind-variants';
 import { memo, useState, useRef, useCallback, FormEvent } from 'react';
 import StyledInputText from '../../atoms/StyledInputText';
-import { StyledBlueButton } from '../../atoms/StyledButton';
+import { VariantsButton, buttonStyles } from '../../atoms/StyledButton';
 import fetcherTodoTable from '@/app/api/supabase/fetcher';
 import type { AddTodoFormProps } from './type/type';
 
@@ -48,7 +48,12 @@ export default function AddTodoForm({ onAddTodo }: AddTodoFormProps) {
         ref={inputRef}
         onChange={handleChangeInput}
       />
-      <StyledBlueButton disabled={isDisabled}>Add</StyledBlueButton>
+      <VariantsButton
+        disabled={isDisabled}
+        className={buttonStyles({ color: 'blue' })}
+      >
+        Add
+      </VariantsButton>
     </form>
   );
 }
