@@ -8,7 +8,7 @@ export default forwardRef<HTMLInputElement, InputProps>(
     return (
       <input
         type="checkbox"
-        className="h-5 w-5 rounded border-gray-300 text-primary-600 shadow-sm focus:border-primary-300 focus:ring focus:ring-primary-200 focus:ring-opacity-50 focus:ring-offset-0 disabled:cursor-not-allowed disabled:text-gray-400 cursor-pointer"
+        className="size-5 cursor-pointer rounded border-gray-300 shadow-sm ring-blue-500 hover:ring-2 focus:ring-2"
         {...props}
         ref={ref}
       />

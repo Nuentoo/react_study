@@ -3,10 +3,10 @@ export default function Loading() {
     <div
       aria-label="Loading..."
       role="status"
-      className="flex items-center justify-center w-full h-[100vh] space-x-2"
+      className="flex h-screen w-full items-center justify-center space-x-2"
     >
       <svg
-        className="h-20 w-20 animate-spin stroke-gray-500"
+        className="size-20 animate-spin stroke-gray-500"
         viewBox="0 0 256 256"
       >
         <line
