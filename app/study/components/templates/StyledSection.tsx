@@ -11,8 +11,8 @@ const StyledSection: React.FC<StyledSectionProps> = ({
   children,
 }) => {
   return (
-    <fieldset className="flex flex-col gap-4 my-5 p-5 bg-gray-200/30 backdrop-blur-lg rounded-md border border-gray-200/30 shadow-2xl">
-      <legend className="whitespace-nowrap rounded-md px-2 py-1 text-white relative left-1/2 -translate-x-1/2 backdrop-blur-md shadow-lg bg-blue-950/80">
+    <fieldset className="my-5 flex flex-col gap-4 rounded-md border border-gray-200/30 bg-gray-200/30 p-5 shadow-2xl backdrop-blur-lg">
+      <legend className="relative left-1/2 -translate-x-1/2 whitespace-nowrap rounded-md bg-blue-950/80 px-2 py-1 text-white shadow-lg backdrop-blur-md">
         {legendName}
       </legend>
       {children}

@@ -49,7 +49,7 @@ const Box: React.FC<BoxProps> = ({
         userSelect: 'none',
         width: boxSize,
       }}
-      className="shadow-xl rounded-lg"
+      className="rounded-lg shadow-xl"
     >
       {children}
     </div>

@@ -8,7 +8,7 @@ const Background: React.FC<BackgroundProps> = ({ boxSize, children }) => {
         height: boxSize,
         width: boxSize,
       }}
-      className="shadow-lg rounded-xl"
+      className="rounded-xl shadow-lg"
     >
       {children}
     </div>
