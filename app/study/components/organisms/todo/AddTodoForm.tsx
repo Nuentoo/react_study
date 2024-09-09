@@ -1,8 +1,8 @@
 import { tv } from 'tailwind-variants';
-import { memo, useState, useRef, useCallback, FormEvent } from 'react';
+import { memo, useState, useRef, useCallback , type FormEvent} from 'react';
 import StyledInputText from '../../atoms/StyledInputText';
 import { VariantsButton, buttonStyles } from '../../atoms/StyledButton';
-import fetcherTodoTable from '@/app/api/supabase/fetcher';
+import fetcherTodoTable from '@/app/api/supabase/todo/fetcher';
 import type { AddTodoFormProps } from './type/type';
 
 const MemoizedStyledInputText = memo(StyledInputText);
