@@ -1,5 +1,5 @@
 import type { Tables } from '@/app/api/supabase/schema.types';
-import type { BodyByMethodType } from '@/app/api/supabase/types/types';
+import type { BodyByMethodType } from '@/app/api/supabase/todo/types/types';
 
 export type TodoSupabase = Tables<'todo Table'>;
 

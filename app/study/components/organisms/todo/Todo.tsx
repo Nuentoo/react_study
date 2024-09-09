@@ -3,7 +3,7 @@ import TodoSpinner from '../../../ui/TodoSpinner';
 import StyledInputText from '../../atoms/StyledInputText';
 import StyledCheckbox from '../../atoms/StyledCheckbox';
 import { VariantsButton, buttonStyles } from '../../atoms/StyledButton';
-import fetcherTodoTable from '@/app/api/supabase/fetcher';
+import fetcherTodoTable from '@/app/api/supabase/todo/fetcher';
 import type { TodoProps, TodoSupabase, UpdateTodoTableType } from './type/type';
 
 const MemoizedStyledCheckbox = memo(StyledCheckbox);
