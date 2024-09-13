@@ -5,6 +5,7 @@ import TaskSkelton from './ui/TaskSkelton';
 import GrabBox from './components/organisms/grab_box/App';
 import SeverQuizApp from './components/organisms/js_method_quiz/App';
 import QuizMenuSkelton from './ui/QuizMenuSkelton';
+import Messenger from './components/organisms/messenger/App';
 
 export default async function Page() {
   return (
@@ -24,6 +25,9 @@ export default async function Page() {
         <Suspense fallback={<QuizMenuSkelton />}>
           <SeverQuizApp />
         </Suspense>
+      </StyledSection>
+      <StyledSection legendName="messenger">
+        <Messenger />
       </StyledSection>
     </main>
   );
