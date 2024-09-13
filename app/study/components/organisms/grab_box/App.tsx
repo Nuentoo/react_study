@@ -47,7 +47,7 @@ export default function GrabBox() {
   return (
     <>
       <select
-        className="h-9 min-w-[25rem] rounded-md border-emerald-500 indent-4 shadow-lg focus:outline-none focus:ring focus:ring-emerald-600"
+        className="h-9 w-40 rounded-md border-emerald-500 indent-4 shadow-lg focus:outline-none focus:ring focus:ring-emerald-600"
         onChange={handleColorChange}
         value={shape.color}
       >

@@ -11,7 +11,7 @@ import type {
 } from './type/type';
 
 const ulFlexVariant = tv({
-  base: 'flex flex-col gap-y-2.5',
+  base: 'mt-5 flex flex-col gap-y-2.5',
 });
 const liGridVariant = tv({
   base: 'grid grid-cols-[auto_minmax(25rem,1fr)_auto_auto] grid-rows-[auto_auto] items-center gap-x-2.5',

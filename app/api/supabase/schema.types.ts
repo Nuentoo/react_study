@@ -9,6 +9,27 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      js_quiz_table: {
+        Row: {
+          category: string;
+          correct: string;
+          id: number;
+          question: string;
+        };
+        Insert: {
+          category?: string;
+          correct: string;
+          id?: number;
+          question: string;
+        };
+        Update: {
+          category?: string;
+          correct?: string;
+          id?: number;
+          question?: string;
+        };
+        Relationships: [];
+      };
       'todo Table': {
         Row: {
           created_at: string;
@@ -18,7 +39,7 @@ export type Database = {
         Insert: {
           created_at?: string;
           done?: boolean;
-          title?: string;
+          title: string;
         };
         Update: {
           created_at?: string;

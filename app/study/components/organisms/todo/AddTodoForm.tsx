@@ -1,5 +1,5 @@
 import { tv } from 'tailwind-variants';
-import { memo, useState, useRef, useCallback , type FormEvent} from 'react';
+import { memo, useState, useRef, useCallback, type FormEvent } from 'react';
 import StyledInputText from '../../atoms/StyledInputText';
 import { VariantsButton, buttonStyles } from '../../atoms/StyledButton';
 import fetcherTodoTable from '@/app/api/supabase/todo/fetcher';
@@ -45,6 +45,7 @@ export default function AddTodoForm({ onAddTodo }: AddTodoFormProps) {
       <MemoizedStyledInputText
         placeholder="Add Todo"
         defaultValue=""
+        style={{ width: '400px' }}
         ref={inputRef}
         onChange={handleChangeInput}
       />

@@ -1,5 +1,5 @@
 import { memo, useState, useRef, useCallback } from 'react';
-import TodoSpinner from '../../../ui/TodoSpinner';
+import Spinner from '@/app/study/ui/Spinner';
 import StyledInputText from '../../atoms/StyledInputText';
 import StyledCheckbox from '../../atoms/StyledCheckbox';
 import { VariantsButton, buttonStyles } from '../../atoms/StyledButton';
@@ -121,7 +121,10 @@ export default function Todo({ todo, onUpdateTodo, onDeleteTodo }: TodoProps) {
   return (
     <>
       {isLoading ? (
-        <TodoSpinner />
+        <>
+          <div className="h-[48px]"></div>
+          <Spinner />
+        </>
       ) : (
         <>
           <div className="row-span-full">
