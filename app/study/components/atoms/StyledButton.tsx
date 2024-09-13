@@ -1,3 +1,4 @@
+import { forwardRef } from 'react';
 import { tv } from 'tailwind-variants';
 
 type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement>;
@@ -21,13 +22,18 @@ const buttonStyles = tv({
   },
 });
 
-function VariantsButton({ children, ...props }: ButtonProps) {
+const VariantsButton = forwardRef<HTMLButtonElement, ButtonProps>(function (
+  { children, ...props },
+  ref,
+) {
   // console.log(`${children} VariantsButton 再レンダリング？？？`);
   return (
-    <button data-ripple-light="true" {...props}>
+    <button data-ripple-light="true" {...props} ref={ref}>
       {children}
     </button>
   );
-}
+});
+
+VariantsButton.displayName = 'VariantsButton';
 
 export { VariantsButton, buttonStyles };

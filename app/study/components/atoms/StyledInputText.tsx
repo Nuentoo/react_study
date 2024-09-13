@@ -9,7 +9,7 @@ export default forwardRef<HTMLInputElement, InputProps>(
       <input
         ref={ref}
         type="text"
-        className="h-9 min-w-[25rem] rounded-lg border-emerald-500 indent-4 shadow-md focus:outline-none focus:ring focus:ring-emerald-600"
+        className="h-9 rounded-lg border-emerald-500 indent-4 shadow-md focus:outline-none focus:ring focus:ring-emerald-600"
         {...props}
       />
     );

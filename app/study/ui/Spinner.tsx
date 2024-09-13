@@ -1,9 +1,8 @@
 import React from 'react';
 
-export default function TodoSpinner(): React.ReactNode {
+export default function Spinner(): React.ReactNode {
   return (
     <>
-      <div className="h-[48px]"></div>
       <div aria-label="Loading..." role="status" className="relative left-1/2">
         <svg
           aria-hidden="true"

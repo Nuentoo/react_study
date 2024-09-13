@@ -4,6 +4,7 @@ const Background: React.FC<BackgroundProps> = ({ boxSize, children }) => {
   return (
     <div
       style={{
+        marginTop: '20px',
         backgroundColor: 'rgba(200, 200, 0, 0.2)',
         height: boxSize,
         width: boxSize,
