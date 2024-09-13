@@ -14,7 +14,9 @@ export default async function SeverQuizApp() {
     console.error('Error fetching initial quiz:', error);
     return (
       <>
-        <p className="mb-3"><strong>Data fetch failed ...</strong></p>
+        <p className="mb-3">
+          <strong>Data fetch failed ...</strong>
+        </p>
         <QuizMenuSkelton />
       </>
     );

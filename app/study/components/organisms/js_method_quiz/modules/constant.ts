@@ -1,3 +1,13 @@
+export const INIT_CATEGORY_GROUP = {
+  Array: [],
+  String: [],
+  Object: [],
+  Map: [],
+  Date: [],
+  Math: [],
+  URL: [],
+};
+
 export const CATEGORY_ID = {
   Array: {
     startId: 1,

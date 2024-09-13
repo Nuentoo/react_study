@@ -2,7 +2,7 @@ import {
   QuizCategory,
   QuizSupabase,
 } from '@/app/api/supabase/quiz/types/types';
-import { CATEGORY_ID } from './constant';
+import { CATEGORY_ID, INIT_CATEGORY_GROUP } from './constant';
 import type { CategorizeGroupType, SelectedQuizSupabase } from '../type/types';
 
 export class CurrentQuizStore {
@@ -65,7 +65,7 @@ export const categorizeGroupe = (
       const curGroup = acc[key] ?? [];
       return { ...acc, [key]: [...curGroup, quiz] };
     },
-    { Array: [], String: [], Object: [], Map: [], Date: [], Math: [], URL: [] },
+    { ...INIT_CATEGORY_GROUP },
   );
 };
 
