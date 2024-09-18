@@ -27,7 +27,9 @@ export default async function Page() {
         </Suspense>
       </StyledSection>
       <StyledSection legendName="messenger">
-        <SeverApp />
+        <Suspense fallback={<QuizMenuSkelton />}>
+          <SeverApp />
+        </Suspense>
       </StyledSection>
     </main>
   );
