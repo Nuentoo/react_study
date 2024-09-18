@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+dialog::backdrop {
+  backdrop-filter: brightness(0.7) blur(1px);
+}
+
 /* :root {
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
