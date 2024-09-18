@@ -1,11 +1,11 @@
-import StyledSection from './components/templates/StyledSection';
+import StyledSection from './_components/templates/StyledSection';
 import { Suspense } from 'react';
-import SeverTodoApp from './components/organisms/todo/App';
-import TaskSkelton from './ui/TaskSkelton';
-import GrabBox from './components/organisms/grab_box/App';
-import SeverQuizApp from './components/organisms/js_method_quiz/App';
-import QuizMenuSkelton from './ui/QuizMenuSkelton';
-import Messenger from './components/organisms/messenger/App';
+import SeverTodoApp from './_components/organisms/todo/App';
+import TaskSkelton from './_ui/TaskSkelton';
+import GrabBox from './_components/organisms/grab_box/App';
+import SeverQuizApp from './_components/organisms/js_method_quiz/App';
+import QuizMenuSkelton from './_ui/QuizMenuSkelton';
+import SeverApp from './_components/organisms/messenger/SeverApp';
 
 export default async function Page() {
   return (
@@ -27,7 +27,7 @@ export default async function Page() {
         </Suspense>
       </StyledSection>
       <StyledSection legendName="messenger">
-        <Messenger />
+        <SeverApp />
       </StyledSection>
     </main>
   );

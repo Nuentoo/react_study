@@ -1,8 +1,8 @@
-import supabase from '@/app/api/supabase/client';
+import supabase from '@/_utils/supabase/public_study/client';
 import type {
   TablesInsert,
   TablesUpdate,
-} from '@/app/api/supabase/schema.types';
+} from '@/_utils/supabase/schema.types';
 
 export const GET = async () => {
   const { data, error, status } = await supabase
