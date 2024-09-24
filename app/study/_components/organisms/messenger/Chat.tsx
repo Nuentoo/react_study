@@ -52,7 +52,7 @@ export default function Chat({
         <TextareaToolBar />
         <textarea
           value={selectedMessage}
-          placeholder={`messenger : ${contact.name}`}
+          placeholder={`messenger : ${contact.slug}`}
           rows={4}
           className="w-full px-2 py-1 text-sm text-gray-800"
           onInput={(e) => {
@@ -77,7 +77,7 @@ export default function Chat({
             disabled={!selectedMessage}
             className={buttonStyles({ color: 'green' })}
           >
-            {`Send to ${contact.name}`}
+            {`Send to ${contact.slug}`}
           </VariantsButton>
         </div>
       </div>

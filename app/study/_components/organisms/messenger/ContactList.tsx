@@ -22,7 +22,7 @@ export default function ContactList({
               // console.log('change発火');
             }}
           >
-            {contact.id === selectedId ? <b>{contact.name}</b> : contact.name}
+            {contact.id === selectedId ? <b>{contact.slug}</b> : contact.slug}
           </button>
         </li>
       ))}

@@ -5,6 +5,9 @@ export async function updateSession(request: NextRequest) {
   let supabaseResponse = NextResponse.next({
     request,
   });
+  // console.log(supabaseResponse)
+
+  // supabaseResponse.headers.set('Cache-Control', 'no-store');
 
   const supabase = createServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_CHAT_URL,
@@ -12,7 +15,8 @@ export async function updateSession(request: NextRequest) {
     {
       cookies: {
         getAll() {
-          return request.cookies.getAll();
+          // console.log(request.cookies.getAll()) // なんか、取得数多いのは気のせい、、？
+          return request.cookies.getAll(); // 利用可能なすべての cookie を返す（next.js）
         },
         setAll(cookiesToSet) {
           cookiesToSet.forEach(({ name, value, options }) =>
@@ -21,8 +25,9 @@ export async function updateSession(request: NextRequest) {
           supabaseResponse = NextResponse.next({
             request,
           });
-          cookiesToSet.forEach(({ name, value, options }) =>
-            supabaseResponse.cookies.set(name, value, options),
+          cookiesToSet.forEach(
+            ({ name, value, options }) =>
+              supabaseResponse.cookies.set(name, value, options), // 送信リクエストに cookie を設定（next.js）
           );
         },
       },

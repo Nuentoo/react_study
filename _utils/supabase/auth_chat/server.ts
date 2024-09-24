@@ -1,6 +1,6 @@
 import { createServerClient, type CookieOptions } from '@supabase/ssr';
 import { cookies } from 'next/headers';
-import type { Database } from '@/_utils/supabase/schema.types';
+import type { Database } from '@/_utils/supabase/auth_chat/schema.types';
 
 const supabaseChatUrl = process.env.NEXT_PUBLIC_SUPABASE_CHAT_URL;
 const supabaseChatAnonKey = process.env.NEXT_PUBLIC_SUPABASE_CHAT_ANON_KEY;
@@ -15,10 +15,12 @@ export function createClient() {
     {
       cookies: {
         getAll() {
-          return cookieStore.getAll();
+          // console.log(cookieStore.getAll())
+          return cookieStore.getAll(); // {name: id名, value: jwt}[]
         },
         setAll(cookiesToSet) {
           try {
+            // console.log('cookiesToSet', cookiesToSet)
             cookiesToSet.forEach(({ name, value, options }) =>
               cookieStore.set(name, value, options),
             );
