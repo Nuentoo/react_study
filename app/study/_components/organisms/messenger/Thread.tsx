@@ -87,11 +87,7 @@ const formatDate = (dateStr: string) => {
   return `${year}/${month}/${day} ${hours}:${minutes}`;
 };
 
-export default function Thread({
-  posts,
-  userId = null,
-  profiles = null,
-}: ThreadProps) {
+export default function Thread({ posts, userId = null, profiles = null }: any) {
   const containerRef = useRef<HTMLDivElement | null>(null);
   useEffect(() => {
     if (
@@ -118,7 +114,7 @@ export default function Thread({
         ref={containerRef}
       >
         {insertThread}
-        {posts.map((post) => (
+        {posts.map((post: any) => (
           <div key={post.id} className="flex gap-3 text-sm text-gray-600">
             <div className="flex size-8 shrink-0 items-center justify-center rounded-full border bg-gray-100">
               <svg
@@ -137,7 +133,7 @@ export default function Thread({
               <span className="block">
                 <span className="mr-2 font-bold text-gray-700">
                   {
-                    profiles.find((profile) => profile.id === post.user_id)
+                    profiles.find((profile: any) => profile.id === post.user_id)
                       .nickname
                   }
                 </span>
