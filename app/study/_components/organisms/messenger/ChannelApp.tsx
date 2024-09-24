@@ -23,9 +23,9 @@ import type { ContactsType, MessengerType, Posts } from './type/type';
 //   ) as MessengerType['message'];
 // };
 
-const generateObjFromContactsId = (contacts) => {
+const generateObjFromContactsId = (contacts: any) => {
   return Object.fromEntries(
-    contacts.map(({ id }) => [id, '']), // 空の文字列を設定
+    contacts.map(({ id }: any) => [id, '']), // 空の文字列を設定
   );
 };
 
@@ -34,7 +34,7 @@ const generateObjFromContactsId = (contacts) => {
 //   message: generateObjFromContactsId(contacts),
 // };
 
-const initialMessengerState = (channels) => {
+const initialMessengerState = (channels: any) => {
   return {
     selectedId: channels[0].id,
     message: generateObjFromContactsId(channels),
@@ -43,7 +43,7 @@ const initialMessengerState = (channels) => {
 
 // const initialPosts: [] = [];
 
-export default function ChannelMessanger({ initialData }) {
+export default function ChannelMessanger({ initialData }: any) {
   const {
     userId,
     userNickName,
@@ -53,7 +53,7 @@ export default function ChannelMessanger({ initialData }) {
   } = initialData;
   const [profiles, setProfiles] = useState(initialProfiles);
   // const [posts, setPosts] = useState<Posts>(initialPosts);
-  const [posts, setPosts] = useState<Posts>(initialMessages);
+  const [posts, setPosts] = useState(initialMessages);
   // const [state, dispatch] = useReducer(messengerReducer, initialMessengerState);
   console.log(
     'initialMessengerState(channels)',
@@ -64,13 +64,13 @@ export default function ChannelMessanger({ initialData }) {
     initialMessengerState(channels),
   );
   console.log('state', state.selectedId);
-  const contact = channels.find(({ id }) => id === state.selectedId);
+  const contact = channels.find(({ id }: any) => id === state.selectedId);
   // console.log('contact', contact)
   // console.log('posts', posts)
   // const selectedMessage = state.message[state.selectedId];
   const selectedMessage = state.message[state.selectedId];
   const selectedPosts = posts.filter(
-    ({ channel_id }) => channel_id === state.selectedId,
+    ({ channel_id }: any) => channel_id === state.selectedId,
   );
 
   useEffect(() => {
@@ -85,7 +85,7 @@ export default function ChannelMessanger({ initialData }) {
         { event: 'INSERT', schema: 'public', table: 'profiles' },
         (payload) => {
           console.log('payload profiles!!', payload);
-          setProfiles((prev) => [...prev, payload.new]);
+          setProfiles((prev: any) => [...prev, payload.new]);
         },
       )
       .subscribe();
@@ -97,7 +97,7 @@ export default function ChannelMessanger({ initialData }) {
         { event: 'INSERT', schema: 'public', table: 'messages' },
         (payload) => {
           console.log('payload messages!!', payload);
-          setPosts((prev) => [...prev, payload.new]);
+          setPosts((prev: any) => [...prev, payload.new]);
         },
       )
       .subscribe();

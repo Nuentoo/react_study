@@ -11,7 +11,7 @@ export const contacts = [
   { id: 0, slug: 'gmail', email: 'hoge@gmail.com' },
   { id: 1, slug: 'nijibox', email: 'nijibox@' },
   { id: 2, slug: 'yahoo', email: 'hogehoge@yahoo.co.jp' },
-] as const;
+];
 
 const generateObjFromContactsId = (
   contacts: ContactsType,
@@ -37,13 +37,13 @@ const formatDate = (date: Date) => {
 };
 
 export default function Messenger() {
-  const [posts, setPosts] = useState<Posts>(initialPosts);
+  const [posts, setPosts] = useState<any>(initialPosts);
   const [state, dispatch] = useReducer(messengerReducer, initialMessengerState);
   // console.log('state', state);
   const contact = contacts[state.selectedId];
   const selectedMessage = state.message[state.selectedId];
 
-  const addPosts = (pastPosts: Posts) => {
+  const addPosts = (pastPosts: any) => {
     const nowDate = new Date();
     setPosts([
       ...pastPosts,

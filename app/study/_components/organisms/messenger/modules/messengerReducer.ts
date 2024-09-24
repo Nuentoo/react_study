@@ -6,7 +6,7 @@ class ExhaustiveError extends Error {
   }
 }
 
-const messengerReducer = (state: MessengerType, action: MessengerAction) => {
+const messengerReducer = (state: any, action: any) => {
   switch (action.type) {
     case 'MESSENGER_CHANGE':
       return {
@@ -30,7 +30,7 @@ const messengerReducer = (state: MessengerType, action: MessengerAction) => {
         },
       };
     default:
-      throw new ExhaustiveError(action); // 本来コンパイルエラーを起こさせるため
+    // throw new ExhaustiveError(action); // 本来コンパイルエラーを起こさせるため
   }
 };
 
