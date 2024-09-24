@@ -1,19 +1,34 @@
-import App from './App';
+import LogoutButton from './Logout';
+import ChannelMessanger from './ChannelApp';
+import Messenger from './App';
 import LoginDialog from './LoginDialog';
-import { loginCheck } from './modules/actions';
+import { getAuthData } from './modules/actions';
 
 export default async function SeverApp() {
   console.log('サーバーコンポーネント？');
-  const islogined = await loginCheck();
+  const data = await getAuthData();
 
-  if (islogined) {
-    return <p>Hello!!!</p>;
-  }
+  // console.log('data', data);
 
-  return (
+  return data ? (
     <>
-      <LoginDialog />
-      <App />
+      <div className="mb-7 flex gap-x-6">
+        <strong>
+          {' '}
+          Hello 🙌{'　'}
+          {data.userNickName}{' '}
+        </strong>
+        <LogoutButton />
+      </div>
+      <ChannelMessanger initialData={data} />
+    </>
+  ) : (
+    <>
+      <div className="mb-7 flex gap-x-6">
+        <strong> this is demonstration </strong>
+        <LoginDialog />
+      </div>
+      <Messenger />
     </>
   );
 }

@@ -8,9 +8,9 @@ import messengerReducer from './modules/messengerReducer';
 import type { ContactsType, MessengerType, Posts } from './type/type';
 
 export const contacts = [
-  { id: 0, name: 'gmail', email: 'hoge@gmail.com' },
-  { id: 1, name: 'nijibox', email: 'nijibox@' },
-  { id: 2, name: 'yahoo', email: 'hogehoge@yahoo.co.jp' },
+  { id: 0, slug: 'gmail', email: 'hoge@gmail.com' },
+  { id: 1, slug: 'nijibox', email: 'nijibox@' },
+  { id: 2, slug: 'yahoo', email: 'hogehoge@yahoo.co.jp' },
 ] as const;
 
 const generateObjFromContactsId = (
@@ -49,9 +49,9 @@ export default function Messenger() {
       ...pastPosts,
       {
         id: nowDate.getTime().toString(),
-        name: contact.name,
+        slug: contact.slug,
         message: selectedMessage,
-        create_at: formatDate(nowDate),
+        inserted_at: formatDate(nowDate),
       },
     ]);
   };
