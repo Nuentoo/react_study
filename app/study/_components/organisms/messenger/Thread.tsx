@@ -133,8 +133,7 @@ export default function Thread({ posts, userId = null, profiles = null }: any) {
               <span className="block">
                 <span className="mr-2 font-bold text-gray-700">
                   {
-                    profiles.find((profile: any) => profile.id === post.user_id)
-                      .nickname
+                    profiles ? profiles.find((profile: any) => profile.id === post.user_id).nickname : post.slug
                   }
                 </span>
                 <small className="text-gray-400">
