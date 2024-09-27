@@ -5,7 +5,7 @@ import TaskSkelton from './_ui/TaskSkelton';
 import GrabBox from './_components/organisms/grab_box/App';
 import SeverQuizApp from './_components/organisms/js_method_quiz/App';
 import QuizMenuSkelton from './_ui/QuizMenuSkelton';
-import SeverApp from './_components/organisms/messenger/SeverApp';
+import SeverChatApp from './_components/organisms/chat/SeverChatApp';
 
 export default async function Page() {
   return (
@@ -26,9 +26,9 @@ export default async function Page() {
           <SeverQuizApp />
         </Suspense>
       </StyledSection>
-      <StyledSection legendName="messenger">
+      <StyledSection legendName="chat">
         <Suspense fallback={<strong>now loading...</strong>}>
-          <SeverApp />
+          <SeverChatApp />
         </Suspense>
       </StyledSection>
     </main>

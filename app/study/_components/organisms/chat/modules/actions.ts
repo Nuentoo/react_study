@@ -8,10 +8,8 @@ import {
   getUser,
   getAllProfiles,
   getAllChannels,
-  getAuthChannels,
   getAllMessages,
-  getAuthMessages,
-} from './store.ts';
+} from './store';
 
 export async function login(formData: FormData) {
   const supabase = createClient();
@@ -30,7 +28,8 @@ export async function login(formData: FormData) {
 
   if (error) {
     // redirect('/error')
-    console.log('サインインエラー', error);
+    console.log('ログインエラー', error);
+    throw new Error(`Login Error : ${error.code}`);
   }
   // console.log('data', data);
 
@@ -55,7 +54,7 @@ export async function signUp(formData: FormData) {
       },
     },
   };
-  console.log('signupData', signupData);
+  // console.log('signupData', signupData);
 
   await supabase.auth.signOut();
 
@@ -64,6 +63,7 @@ export async function signUp(formData: FormData) {
   if (error) {
     // redirect('/error')
     console.log('サインアップエラー', error);
+    throw new Error(`Sign up Error : ${error.code}`);
   }
   // console.log('data', data);
 
@@ -75,26 +75,31 @@ export async function signUp(formData: FormData) {
 export const logout = async () => {
   const supabase = createClient();
   const { error } = await supabase.auth.signOut();
+  if (error) {
+    console.log('ログアウトエラー', error);
+    throw new Error(`Logout Error : ${error.code}`);
+  }
   redirect('/study', RedirectType.replace);
 };
 
 // サーバーサイドレンダリング開始直後 〜 DOM生成前
 export async function getAuthData() {
-  const { id: userId, nickname: userNickName } = await getUser();
-  if (!userId) return null;
+  const { id: userId, nickname: userNickname } = await getUser();
+  if (!(userId && userNickname)) return null;
 
-  const profiles = await getAllProfiles();
+  const initialProfiles = await getAllProfiles();
 
-  // const channels = await getAuthChannels(id);
+  const initialChannels = await getAllChannels();
 
-  const channels = await getAllChannels();
+  const initialMessages = await getAllMessages();
 
-  // const channelIds = channels.map(({ id }) => id);
-  // const messages = await getAuthMessages(channelIds);
+  // console.log(userId, userNickName, initialProfiles, channels, initialMessages);
 
-  const messages = await getAllMessages();
-
-  console.log(userId, userNickName, channels, messages);
-
-  return { userId, userNickName, profiles, channels, messages };
+  return {
+    userId,
+    userNickname,
+    initialProfiles,
+    initialChannels,
+    initialMessages,
+  };
 }
