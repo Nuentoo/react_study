@@ -1,10 +1,23 @@
 'use client';
 
-import { useRef } from 'react';
+import { useState, useRef } from 'react';
 import { login, signUp } from './modules/actions';
 
 export default function LoginDialog() {
+  const [error, setError] = useState<string | null>(null);
   const dialogRef = useRef<HTMLDialogElement | null>(null);
+
+  const handleLogin = (formData: FormData) => {
+    login(formData).catch((e: Error) => {
+      setError(e.message);
+    });
+  };
+
+  const handleSignUp = (formData: FormData) => {
+    signUp(formData).catch((e: Error) => {
+      setError(e.message);
+    });
+  };
 
   const showModal = () => {
     dialogRef.current?.showModal();
@@ -103,26 +116,29 @@ export default function LoginDialog() {
                       Remember me
                     </label>
                   </div>
-                  <a href="#" className="text-sm text-blue-500 hover:underline">
+                  <a className="text-sm text-blue-500 hover:underline">
                     Lost Password?
                   </a>
                 </div>
                 <div className="flex gap-x-4">
                   <button
                     type="submit"
-                    formAction={login}
+                    formAction={handleLogin}
                     className="w-full rounded-lg bg-blue-600 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-800"
                   >
                     Login
                   </button>
                   <button
                     type="submit"
-                    formAction={signUp}
+                    formAction={handleSignUp}
                     className="w-full rounded-lg bg-blue-600 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-800"
                   >
                     Sign up
                   </button>
                 </div>
+                <p>
+                  <strong className="mt-4 text-red-500">{error}</strong>
+                </p>
               </form>
             </div>
           </fieldset>
@@ -130,11 +146,11 @@ export default function LoginDialog() {
       </dialog>
 
       <button
-        className="block rounded-lg bg-blue-600 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-800"
+        className="mx-auto block rounded-lg bg-blue-600 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-800"
         type="button"
         onClick={showModal}
       >
-        Login From
+        Login Form
       </button>
     </>
   );

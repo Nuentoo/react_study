@@ -1,12 +1,11 @@
 import LogoutButton from './Logout';
-import ChannelMessanger from './ChannelApp';
-import Messenger from './App';
+import ClienChatApp from './ClienChatApp';
 import LoginDialog from './LoginDialog';
 import { getAuthData } from './modules/actions';
 
-export default async function SeverApp() {
-  console.log('サーバーコンポーネント？');
+export default async function SeverChatApp() {
   const data = await getAuthData();
+  console.log('サーバーコンポーネント')
 
   // console.log('data', data);
 
@@ -14,21 +13,21 @@ export default async function SeverApp() {
     <>
       <div className="mb-7 flex gap-x-6">
         <strong>
-          {' '}
           Hello 🙌{'　'}
-          {data.userNickName}{' '}
+          {data.userNickname}
         </strong>
         <LogoutButton />
       </div>
-      <ChannelMessanger initialData={data} />
+      <ClienChatApp initialData={data} />
     </>
   ) : (
     <>
-      <div className="mb-7 flex gap-x-6">
-        <strong> this is demonstration </strong>
-        <LoginDialog />
+      <div className="space-y-6">
+        <strong> Let&apos;s Sign up or Login </strong>
+        <div className="flex">
+          <LoginDialog />
+        </div>
       </div>
-      <Messenger />
     </>
   );
 }

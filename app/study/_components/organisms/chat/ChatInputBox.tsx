@@ -1,16 +1,14 @@
 import { useRef } from 'react';
-import { VariantsButton, buttonStyles } from '../../atoms/StyledButton';
 import StyledSendButton from '../../atoms/StyledSendButton';
 import TextareaToolBar from '../../molecules/TextareaToolBar';
-import type { ChatProps } from './type/type';
+import type { ChatInputBoxProps } from './type/type';
 
-export default function Chat({
-  contact,
+export default function ChatInputBox({
+  currentChannel,
   selectedMessage,
-  posts,
-  addPosts,
-  dispatch,
-}: ChatProps): React.ReactElement {
+  addPost,
+  chatDispatch,
+}: ChatInputBoxProps) {
   const buttonRef = useRef<HTMLButtonElement | null>(null);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -20,18 +18,9 @@ export default function Chat({
     const formData = new FormData(e.currentTarget, submitter);
     const action = formData.get('action');
     switch (action) {
-      case 'send':
-        if (
-          !confirm(`Sending email "${selectedMessage}" to ${contact.email} ?`)
-        )
-          return;
-        dispatch({ type: 'MESSAGE_SEND' });
-        // console.log('send発火');
-        break;
       case 'post':
-        addPosts(posts);
-        dispatch({ type: 'MESSAGE_SEND' });
-        // console.log('post発火');
+        addPost();
+        chatDispatch({ type: 'POST_MESSAGE' });
         break;
       default:
         break;
@@ -52,15 +41,14 @@ export default function Chat({
         <TextareaToolBar />
         <textarea
           value={selectedMessage}
-          placeholder={`messenger : ${contact.slug}`}
+          placeholder={`channel : ${currentChannel?.slug}`}
           rows={4}
           className="w-full px-2 py-1 text-sm text-gray-800"
           onInput={(e) => {
-            dispatch({
-              type: 'MESSAGE_INPUT',
+            chatDispatch({
+              type: 'INPUT_MESSAGE',
               editMessage: e.currentTarget.value,
             });
-            // console.log('input発火', e.currentTarget.value)
           }}
           onKeyDown={handleCommandEnter}
         ></textarea>
@@ -71,14 +59,6 @@ export default function Chat({
             disabled={!selectedMessage}
             ref={buttonRef}
           />
-          <VariantsButton
-            name="action"
-            value="send"
-            disabled={!selectedMessage}
-            className={buttonStyles({ color: 'green' })}
-          >
-            {`Send to ${contact.slug}`}
-          </VariantsButton>
         </div>
       </div>
     </form>
