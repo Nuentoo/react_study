@@ -6,8 +6,7 @@ const supabaseChatUrl = process.env.NEXT_PUBLIC_SUPABASE_CHAT_URL;
 const supabaseChatAnonKey = process.env.NEXT_PUBLIC_SUPABASE_CHAT_ANON_KEY;
 
 export function createClient() {
-  const cookieStore = cookies();
-  // console.log('cookieStore', cookieStore.getAll())
+	const cookieStore = cookies();
 
 	return createServerClient<Database, CookieOptions>(
 		supabaseChatUrl,

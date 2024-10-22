@@ -3,112 +3,98 @@
 import { createClient } from '@/_utils/supabase/auth_chat/server';
 import type { TableProfile, TableChannel, TableMessage } from '../type/type';
 
-type GetUserReturnType = Promise<{
-  id: string | null;
-  nickname: string | null;
-}>;
-
-export const getUser = async (): GetUserReturnType => {
-  const supabase = createClient();
-  const {
-    data: { user },
-    error,
-  } = await supabase.auth.getUser(); // cookieによる認証の返却値
-  // console.log(user, error);
-  if (error || !user) {
-    // redirect('/login')
-    return { id: null, nickname: null }; // { user: null }, {AuthSessionMissingError: , __isAuthError: true, status: 400, code: undefined}
-  }
-  return { id: user.id, nickname: user.user_metadata.nickname };
-};
-
 // 全てのprofilesの取得
 export const getAllProfiles = async (): Promise<TableProfile[]> => {
-  const supabase = createClient();
-  const { data, error } = await supabase.from('profiles').select('*');
-  // console.log('profiles', data, error);
-  if (error || !data) {
-    return [];
-  }
-  return data;
+	const supabase = createClient();
+	const { data, error } = await supabase.from('profiles').select('*');
+	if (error || !data) {
+		return [];
+	}
+	return data;
 };
 
 // 全てのチャンネルの取得
 export const getAllChannels = async (): Promise<TableChannel[]> => {
-  const supabase = createClient();
-  const { data, error } = await supabase.from('channels').select('*');
-  // console.log('channels', data, error);
-  if (error || !data) {
-    return [];
-  }
-  return data;
+	const supabase = createClient();
+	const { data, error } = await supabase.from('channels').select('*');
+	if (error || !data) {
+		return [];
+	}
+	return data;
 };
-
-// created_by = user_id のチャンネルの取得
-// export const getAuthChannels = async (user_id: string) => {
-//   const supabase = createClient();
-//   const { data, error } = await supabase
-//     .from('channels')
-//     .select('*')
-//     .eq('created_by', user_id);
-//   // console.log('channels', data, error);
-//   if (error || !data) {
-//     return [];
-//   }
-//   return data;
-// };
 
 // 全てのメッセージの取得
 export const getAllMessages = async (): Promise<TableMessage[]> => {
-  const supabase = createClient();
-  const { data, error } = await supabase.from('messages').select('*');
-  // console.log('messages', data, error);
-  if (error || !data) {
-    return [];
-  }
-  return data;
-};
-
-// channel_id = (created_by → id)  のメッセージの取得
-export const getAuthMessages = async (channel_id: number[]) => {
-  const supabase = createClient();
-  const { data, error } = await supabase
-    .from('messages')
-    .select('*')
-    .in('channel_id', channel_id);
-  // console.log('messages', data, error);
-  if (error || !data) {
-    return [];
-  }
-  return data;
+	const supabase = createClient();
+	const { data, error } = await supabase.from('messages').select('*');
+	if (error || !data) {
+		return [];
+	}
+	return data;
 };
 
 // チャンネル追加
-// export const addChannel = async (slug: string, user_id: string) => {
-//   const supabase = createClient();
-//   // console.log('slug, user_id', slug, user_id)
-//   try {
-//     const { data, error } = await supabase
-//       .from('channels')
-//       .insert([{ slug, created_by: user_id }])
-//       .select();
-//     // console.log('data!!', data, 'error', error)
-//     return data;
-//   } catch (error) {
-//     console.log('error', error);
-//   }
-// };
+export const addChannel = async (slug: string, userId: string) => {
+	const supabase = createClient();
+	const { data, error } = await supabase
+		.from('channels')
+		.insert([{ slug, created_by: userId }])
+		.select()
+		.single();
+	if (error)
+		throw new Error(
+			`addChannel ：error_code: ${error.code} , details: ${error.details} , massage: ${error.message}`,
+		);
+	return data;
+};
+
+// チャンネル名の変更
+export const renameChannel = async (slug: string, channelId: number) => {
+	const supabase = createClient();
+	const { data, error } = await supabase
+		.from('channels')
+		.update({ slug })
+		.eq('id', channelId)
+		.select()
+		.single();
+	if (error)
+		throw new Error(
+			`renameChannel ：error_code: ${error.code} , details: ${error.details} , massage: ${error.message}`,
+		);
+	return data;
+};
+
+// チャンネルの削除
+export const deleteChannel = async (channelId: number) => {
+	const supabase = createClient();
+	const { data, error } = await supabase
+		.from('channels')
+		.delete()
+		.eq('id', channelId)
+		.select()
+		.single();
+	if (error)
+		throw new Error(
+			`deleteChannel ：error_code: ${error.code} , details: ${error.details} , massage: ${error.message}`,
+		);
+	return data;
+};
 
 // メッセージ投稿
 export const insertMessage = async (
-  message: string,
-  user_id: string,
-  channel_id: number,
+	message: string,
+	user_id: string,
+	channel_id: number,
 ) => {
-  const supabase = createClient();
-  const { data: messages, error: errorByMessages } = await supabase
-    .from('messages')
-    .insert([{ message, user_id, channel_id }])
-    .select();
-  // console.log('messages', messages, errorByMessages)
+	const supabase = createClient();
+	const { data, error } = await supabase
+		.from('messages')
+		.insert([{ message, user_id, channel_id }])
+		.select()
+		.single();
+	if (error)
+		throw new Error(
+			`insertMessage ：error_code: ${error.code} , details: ${error.details} , massage: ${error.message}`,
+		);
+	return data;
 };

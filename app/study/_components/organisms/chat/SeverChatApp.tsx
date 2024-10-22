@@ -1,33 +1,21 @@
-import LogoutButton from './Logout';
-import ClienChatApp from './ClienChatApp';
-import LoginDialog from './LoginDialog';
-import { getAuthData } from './modules/actions';
+import Link from 'next/link';
+import ClientChatApp from './ClientChatApp';
+import { getAuthData } from './modules/settion';
+import anchorStyles from './styles/anchorStyles';
 
 export default async function SeverChatApp() {
-  const data = await getAuthData();
-  console.log('サーバーコンポーネント')
+	const data = await getAuthData();
 
-  // console.log('data', data);
-
-  return data ? (
-    <>
-      <div className="mb-7 flex gap-x-6">
-        <strong>
-          Hello 🙌{'　'}
-          {data.userNickname}
-        </strong>
-        <LogoutButton />
-      </div>
-      <ClienChatApp initialData={data} />
-    </>
-  ) : (
-    <>
-      <div className="space-y-6">
-        <strong> Let&apos;s Sign up or Login </strong>
-        <div className="flex">
-          <LoginDialog />
-        </div>
-      </div>
-    </>
-  );
+	return data ? (
+		<ClientChatApp initialData={data} />
+	) : (
+		<>
+			<div className="space-y-6">
+				<strong> Let&apos;s Sign up or Login </strong>
+				<Link href="/study/login" className={anchorStyles({ color: 'blue' })}>
+					Login Form
+				</Link>
+			</div>
+		</>
+	);
 }

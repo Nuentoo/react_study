@@ -4,102 +4,83 @@ import { revalidatePath } from 'next/cache';
 import { redirect, RedirectType } from 'next/navigation';
 
 import { createClient } from '@/_utils/supabase/auth_chat/server';
-import {
-  getUser,
-  getAllProfiles,
-  getAllChannels,
-  getAllMessages,
-} from './store';
 
 export async function login(formData: FormData) {
-  const supabase = createClient();
+	const supabase = createClient();
 
-  // type-casting here for convenience
-  // in practice, you should validate your inputs
+	// type-casting here for convenience
+	// in practice, you should validate your inputs
 
-  const email = `${formData.get('nickname')}@hoge.com`; // nicknameだと匿名アカウント扱いで、認証に制約がかけられないので、authの仕様に一旦合わせる
-  const authData = {
-    email: email as string,
-    password: formData.get('password') as string,
-  };
-  await supabase.auth.signOut();
+	const nickname = formData.get('nickname');
+	const password = formData.get('password');
 
-  const { data, error } = await supabase.auth.signInWithPassword(authData);
+	if (typeof nickname !== 'string' || typeof password !== 'string') return;
 
-  if (error) {
-    // redirect('/error')
-    console.log('ログインエラー', error);
-    throw new Error(`Login Error : ${error.code}`);
-  }
-  // console.log('data', data);
+	const email = `${nickname}@hoge.com`; // nicknameだと匿名アカウント扱いで、認証に制約がかけられないので、authの仕様に一旦合わせる
+	const authData = { email, password };
+	await supabase.auth.signOut();
 
-  revalidatePath('/study', 'layout');
-  redirect('/study');
+	const { data, error } = await supabase.auth.signInWithPassword(authData);
+
+	if (error) {
+		throw new Error(
+			`Login Error【${error.status}】 : ${error.name}：${error.code}`,
+		);
+	}
+
+	revalidatePath('/study', 'layout');
+	redirect('/study', RedirectType.replace);
 }
 
 export async function signUp(formData: FormData) {
-  const supabase = createClient();
+	const supabase = createClient();
 
-  // type-casting here for convenience
-  // in practice, you should validate your inputs
+	// type-casting here for convenience
+	// in practice, you should validate your inputs
 
-  const nickname = formData.get('nickname');
-  const email = `${formData.get('nickname')}@hoge.com`; // nicknameだと匿名アカウント扱いで、認証に制約がかけられないので、authの仕様に一旦合わせる
-  const signupData = {
-    email: email as string,
-    password: formData.get('password') as string,
-    options: {
-      data: {
-        nickname: nickname,
-      },
-    },
-  };
-  // console.log('signupData', signupData);
+	const nickname = formData.get('nickname');
+	const password = formData.get('password');
 
-  await supabase.auth.signOut();
+	if (typeof nickname !== 'string' || typeof password !== 'string') return;
 
-  const { data, error } = await supabase.auth.signUp(signupData);
+	const email = `${formData.get('nickname')}@hoge.com`;
+	const signupData = {
+		email: email,
+		password: password,
+		options: {
+			data: {
+				nickname: nickname,
+			},
+		},
+	};
 
-  if (error) {
-    // redirect('/error')
-    console.log('サインアップエラー', error);
-    throw new Error(`Sign up Error : ${error.code}`);
-  }
-  // console.log('data', data);
+	await supabase.auth.signOut();
 
-  revalidatePath('/study', 'layout');
-  redirect('/study');
+	const { data, error } = await supabase.auth.signUp(signupData); // TODO: signUpできなくてもアクセストークンは生成される
+
+	if (error) {
+		await supabase.auth.signOut(); // TODO: ここでアクセストークンを空にしてみる
+		throw new Error(
+			`Sign up Error【${error.status}】 : ${error.name}：${error.code}`,
+		);
+	}
+
+	revalidatePath('/study', 'layout');
+	redirect('/study', RedirectType.replace);
 }
 
 // ログアウト
 export const logout = async () => {
-  const supabase = createClient();
-  const { error } = await supabase.auth.signOut();
-  if (error) {
-    console.log('ログアウトエラー', error);
-    throw new Error(`Logout Error : ${error.code}`);
-  }
-  redirect('/study', RedirectType.replace);
+	const supabase = createClient();
+
+	const { error } = await supabase.auth.signOut();
+
+	if (error) {
+		throw new Error(
+			`Logout Error【${error.status}】 : ${error.name}：${error.code}`,
+		);
+	}
+
+	revalidatePath('/study', 'layout');
+	redirect('/study/logout', RedirectType.replace);
 };
-
-// サーバーサイドレンダリング開始直後 〜 DOM生成前
-export async function getAuthData() {
-  const { id: userId, nickname: userNickname } = await getUser();
-  if (!(userId && userNickname)) return null;
-
-  const initialProfiles = await getAllProfiles();
-
-  const initialChannels = await getAllChannels();
-
-  const initialMessages = await getAllMessages();
-
-  // console.log(userId, userNickName, initialProfiles, channels, initialMessages);
-
-  return {
-    userId,
-    userNickname,
-    initialProfiles,
-    initialChannels,
-    initialMessages,
-  };
-}
