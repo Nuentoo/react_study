@@ -6,18 +6,18 @@ export type TodoSupabase = Tables<'todo Table'>;
 export type TodoListSupabase = TodoSupabase[];
 
 export type UpdateTodoTableType<T extends 'PATCH' | 'DELETE'> =
-  BodyByMethodType<T>;
+	BodyByMethodType<T>;
 
 export type ClientTodoAppProps = {
-  initialTasks: TodoSupabase[];
+	initialTasks: TodoSupabase[];
 };
 
 export type AddTodoFormProps = {
-  onAddTodo: (value: TodoSupabase) => void;
+	onAddTodo: (value: TodoSupabase) => void;
 };
 
 export type TodoProps = {
-  todo: TodoSupabase;
-  onUpdateTodo: (value: TodoSupabase) => void;
-  onDeleteTodo: (value: TodoSupabase) => void;
+	todo: TodoSupabase;
+	onUpdateTodo: (value: TodoSupabase) => void;
+	onDeleteTodo: (value: TodoSupabase) => void;
 };

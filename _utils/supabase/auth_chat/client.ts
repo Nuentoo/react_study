@@ -5,5 +5,5 @@ const supabaseChatUrl = process.env.NEXT_PUBLIC_SUPABASE_CHAT_URL;
 const supabaseChatAnonKey = process.env.NEXT_PUBLIC_SUPABASE_CHAT_ANON_KEY;
 
 export function createClient() {
-  return createBrowserClient<Database>(supabaseChatUrl, supabaseChatAnonKey);
+	return createBrowserClient<Database>(supabaseChatUrl, supabaseChatAnonKey);
 }

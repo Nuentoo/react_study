@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 dialog::backdrop {
-  backdrop-filter: brightness(0.7) blur(1px);
+	backdrop-filter: brightness(0.7) blur(1px);
 }
 
 /* :root {
