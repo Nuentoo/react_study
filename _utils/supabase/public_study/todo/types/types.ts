@@ -8,15 +8,15 @@ type BodyForPatch = Tables<'todo Table'>;
 type BodyForDelete = Tables<'todo Table'>['created_at'];
 
 export type BodyByMethodType<T extends methodType> = T extends 'GET'
-  ? BodyForGet
-  : T extends 'POST'
-    ? BodyForPost
-    : T extends 'PATCH'
-      ? BodyForPatch
-      : T extends 'DELETE'
-        ? BodyForDelete
-        : never;
+	? BodyForGet
+	: T extends 'POST'
+		? BodyForPost
+		: T extends 'PATCH'
+			? BodyForPatch
+			: T extends 'DELETE'
+				? BodyForDelete
+				: never;
 
 export type fetcherTodoTableReturnType =
-  | Promise<Tables<'todo Table'>[]>
-  | never;
+	| Promise<Tables<'todo Table'>[]>
+	| never;

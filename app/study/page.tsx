@@ -8,29 +8,29 @@ import QuizMenuSkelton from './_ui/QuizMenuSkelton';
 import SeverChatApp from './_components/organisms/chat/SeverChatApp';
 
 export default async function Page() {
-  return (
-    <main
-      className="flex items-center justify-center"
-      style={{ fontFamily: 'Meiryo Arial', flexDirection: 'column' }}
-    >
-      <StyledSection legendName="todo supabase">
-        <Suspense fallback={<TaskSkelton />}>
-          <SeverTodoApp />
-        </Suspense>
-      </StyledSection>
-      <StyledSection legendName="grab box">
-        <GrabBox />
-      </StyledSection>
-      <StyledSection legendName="js method quiz">
-        <Suspense fallback={<QuizMenuSkelton />}>
-          <SeverQuizApp />
-        </Suspense>
-      </StyledSection>
-      <StyledSection legendName="chat">
-        <Suspense fallback={<strong>now loading...</strong>}>
-          <SeverChatApp />
-        </Suspense>
-      </StyledSection>
-    </main>
-  );
+	return (
+		<main
+			className="flex items-center justify-center"
+			style={{ fontFamily: 'Meiryo Arial', flexDirection: 'column' }}
+		>
+			<StyledSection legendName="todo supabase">
+				<Suspense fallback={<TaskSkelton />}>
+					<SeverTodoApp />
+				</Suspense>
+			</StyledSection>
+			<StyledSection legendName="grab box">
+				<GrabBox />
+			</StyledSection>
+			<StyledSection legendName="js method quiz">
+				<Suspense fallback={<QuizMenuSkelton />}>
+					<SeverQuizApp />
+				</Suspense>
+			</StyledSection>
+			<StyledSection legendName="chat">
+				<Suspense fallback={<strong>now loading...</strong>}>
+					<SeverChatApp />
+				</Suspense>
+			</StyledSection>
+		</main>
+	);
 }
